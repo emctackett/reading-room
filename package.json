@@ -23,6 +23,8 @@
   },
   "homepage": "https://github.com/emctackett/reading-room#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-handlebars": "^4.0.0",
+    "handlebars": "^4.7.3"
   }
 }
