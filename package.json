@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/emctackett/reading-room/issues"
   },
-  "homepage": "https://github.com/emctackett/reading-room#readme"
+  "homepage": "https://github.com/emctackett/reading-room#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
