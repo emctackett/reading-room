@@ -20,6 +20,7 @@ $(function() {
   //   const existingSocket =
   // }
 
+
   if ($('.video-container')) {
     streamVideo();
     //connectSocket();
