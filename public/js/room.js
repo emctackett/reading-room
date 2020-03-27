@@ -14,16 +14,32 @@ $(function() {
     );
   }
 
-  function connectSocket() {
-    const socket = io.connect('http://localhost');
+  // function connectSocket() {
+  //   const socket = io.connect('http://localhost');
+  //
+  //   const existingSocket =
+  // }
 
-    // socket.on('news', function(data) {
-    //   console.log(data);
-    // });
-  }
 
   if ($('.video-container')) {
     streamVideo();
-    connectSocket();
+    //connectSocket();
+    const socket = io.connect('http://localhost');
+
+    // socket.on('connection', socket => {
+    //   const existingSocket = activeSockets.find(
+    //     existingSocket => existingSocket === socket.id
+    //   );
+    //
+    //   if (!existingSocket) {
+    //     activeSockets.push(socket.id);
+    //   }
+    //
+    //   socket.on('disconnect', () => {
+    //     activeSockets = activeSockets.filter(
+    //       existingSocket => existingSocket !== socket.id
+    //     );
+    //   });
+    // });
   }
 });
