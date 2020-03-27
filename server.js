@@ -1,4 +1,10 @@
-const express = require('express');
+import express from "express";
+//import socketIO, { Server as SocketIOServer } from "socket.io";
+//import createServer, { Server as HTTPServer } from "http";
+
+//import socketIO, {Server as SocketIOServer } from "socket.io";
+//import { createServer, Server as HTTP Server } from "http";
+
 const app = express();
 const port = process.env.PORT || 4000;
 
@@ -6,6 +12,13 @@ app.use(express.static('public'));
 
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var bodyParser = require('body-parser');
+
+//httpServer = createServer(app)
+//io = socketIO(httpServer);
+
+//io.on('connection', socket => {
+  //console.log('socket connected.');
+//});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
