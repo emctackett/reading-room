@@ -7,10 +7,16 @@ $(function() {
     });
   }
 
+  function visitNewRoom(roomId) {
+    $.ajax({
+      type: "GET",
+      url: `https://reading-room.herokuapp.com${roomId}`
+    });
+  }
+
   $('#new-room').click((e) => {
     const roomId = generateUniqueId();
-    console.log(roomId);
-    // generate new link
-    // open new link in new tab
+
+    visitNewRoom(roomId);
   });
 });
