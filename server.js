@@ -2,8 +2,10 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(express.static('public'));
+
 app.get('/', (req, res) => {
-  console.log('home');
+  res.render('index');
 });
 
 app.listen(port, () => {
