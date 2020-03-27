@@ -8,10 +8,10 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="#">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Library</a>
+          <a class="nav-link" href="#">Library<span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Schedule Session</a>
@@ -23,15 +23,28 @@
     </div>
   </nav>
 
-
-  <h1>The Reading Room: Library</h1>
-
-  <ul>
-      {{#each books}}
-      <li><a href="/public/txt/{{this.file}}.txt" download>{{this.title}}</a></li>
-      {{/each}}
-  </ul>
+<!--
+    <div class="container-fluid">
+      <h1>The Reading Room</h1>
+    </div>
+-->
 
 </header>
 
 <main>
+
+<div class="container">
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">Reading Room Library</h1>
+            <p class="lead">Our Library includes text versions of many Grimm's Fairy Tale stories. The list of available stores is below. Click on the link to download a text file of the story to preview the book before selecting it for your Reading Room.</p>
+        </div>
+    </div>
+    <ul class="list-group">
+      {{#each stories}}
+        <li class="list-group-item list-group-item-action"><a href="/txt/{{file}}.txt" download>{{title}}</a></li>
+      {{/each}}
+    </ul>
+</div>
+
+</main>
