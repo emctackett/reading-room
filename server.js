@@ -4,12 +4,21 @@ const port = process.env.PORT || 4000;
 
 app.use(express.static('public'));
 
+var handlebars = require('express-handlebars').create({defaultLayout:'main'});
+var bodyParser = require('body-parser');
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+app.engine('handlebars', handlebars.engine);
+app.set('view engine', 'handlebars');
+
 app.get('/', (req, res) => {
-  res.render('index');
+  res.render('home');
 });
 
 app.get('/:room_id', (req, res) => {
-  console.log('new room!');
+  res.render('room');
 });
 
 app.listen(port, () => {
