@@ -4,7 +4,8 @@
   "description": "Connects elderly individuals with children for socialization and read-along sessions.  Meant to provide a sense of community during times of isolation.",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "npm test",
+    "start": "node -r esm server.js"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,12 @@
   },
   "homepage": "https://github.com/emctackett/reading-room#readme",
   "dependencies": {
+    "@std/esm": "^0.26.0",
+    "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-handlebars": "^4.0.0",
-    "handlebars": "^4.7.3"
+    "handlebars": "^4.7.3",
+    "http": "0.0.1-security",
+    "socket.io": "^2.3.0"
   }
 }

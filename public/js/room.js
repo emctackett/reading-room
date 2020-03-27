@@ -4,7 +4,6 @@ $(function() {
       { video: true, audio: true },
       stream => {
         const localVideo = $('#local-video')[0];
-        console.log(localVideo);
         if (localVideo) {
           localVideo.srcObject = stream;
         }
@@ -16,7 +15,9 @@ $(function() {
   }
 
   function connectSocket() {
-    
+    // io.on('connection', socket => {
+    //   console.log('hello socket connected');
+    // });
   }
 
   if ($('.video-container')) {
