@@ -14,14 +14,31 @@ $(function() {
     );
   }
 
-  function connectSocket() {
-    // io.on('connection', socket => {
-    //   console.log('hello socket connected');
-    // });
-  }
+  // function connectSocket() {
+  //   const socket = io.connect('http://localhost');
+  //
+  //   const existingSocket =
+  // }
 
   if ($('.video-container')) {
     streamVideo();
-    connectSocket();
+    //connectSocket();
+    const socket = io.connect('http://localhost');
+
+    // socket.on('connection', socket => {
+    //   const existingSocket = activeSockets.find(
+    //     existingSocket => existingSocket === socket.id
+    //   );
+    //
+    //   if (!existingSocket) {
+    //     activeSockets.push(socket.id);
+    //   }
+    //
+    //   socket.on('disconnect', () => {
+    //     activeSockets = activeSockets.filter(
+    //       existingSocket => existingSocket !== socket.id
+    //     );
+    //   });
+    // });
   }
 });
