@@ -8,10 +8,12 @@ $(function() {
   }
 
   function visitNewRoom(roomId) {
-    $.ajax({
-      type: "GET",
-      url: `https://reading-room.herokuapp.com${roomId}`
-    });
+    const room = document.createElement('a');
+    const host = window.location.hostname;
+
+    room.target = '_blank';
+    room.href = `/${roomId}`;
+    room.click();
   }
 
   $('#new-room').click((e) => {
