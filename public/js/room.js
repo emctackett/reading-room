@@ -14,7 +14,7 @@ $(function() {
     );
   }
 
-  if ($('.video-container')) {
+  if ($('.video-container')[0]) {
     streamVideo();
 
     //const socket = io.connect('http://localhost');
