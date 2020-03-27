@@ -15,7 +15,12 @@ $(function() {
     );
   }
 
+  function connectSocket() {
+    
+  }
+
   if ($('.video-container')) {
     streamVideo();
+    connectSocket();
   }
 });
