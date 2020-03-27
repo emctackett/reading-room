@@ -1,0 +1,28 @@
+{
+  "name": "reading-room",
+  "version": "1.0.0",
+  "description": "Connects elderly individuals with children for socialization and read-along sessions.  Meant to provide a sense of community during times of isolation.",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emctackett/reading-room.git"
+  },
+  "keywords": [
+    "community",
+    "read",
+    "video",
+    "chat"
+  ],
+  "author": "Mae LaPresta, Manda Jensen, Elizabeth Tackett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emctackett/reading-room/issues"
+  },
+  "homepage": "https://github.com/emctackett/reading-room#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
