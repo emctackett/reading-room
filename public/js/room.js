@@ -15,8 +15,10 @@ $(function() {
   }
 
   function connectSocket() {
-    // io.on('connection', socket => {
-    //   console.log('hello socket connected');
+    const socket = io.connect('http://localhost');
+
+    // socket.on('news', function(data) {
+    //   console.log(data);
     // });
   }
 

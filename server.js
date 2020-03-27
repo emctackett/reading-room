@@ -1,11 +1,16 @@
 import express from "express";
-//import socketIO, { Server as SocketIOServer } from "socket.io";
-//import createServer, { Server as HTTPServer } from "http";
-
-//import socketIO, {Server as SocketIOServer } from "socket.io";
-//import { createServer, Server as HTTP Server } from "http";
-
 const app = express();
+
+// https://socket.io/docs/#Using-with-Node-http-server
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+server.listen(80);
+
+io.on('connection', function(socket) {
+  socket.emit('news', {hello: 'world, we are connected'});
+});
+
 const port = process.env.PORT || 4000;
 
 const fs = require('fs');
@@ -14,13 +19,6 @@ app.use(express.static('public'));
 
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var bodyParser = require('body-parser');
-
-//httpServer = createServer(app)
-//io = socketIO(httpServer);
-
-//io.on('connection', socket => {
-  //console.log('socket connected.');
-//});
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
