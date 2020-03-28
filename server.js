@@ -45,12 +45,12 @@ app.get('/schedule', (req, res) => {
   res.render('schedule', context);
 });
 
-router.post('/schedule', function(req, res){
+app.post('/schedule', function(req, res){
   console.log("post request received");
   console.log(req.body)
   var mysql = req.app.get('mysql');
   var sql = "INSERT INTO sessions (UIUD, title, email, start_time, reader, listener) VALUES (?,?,?,?,?,?)";
-  var inserts = [req.body.UIUDid, req.body.storyTitle, req.body.email, req.body.meetingTime, req.body.readId, req.body.listenId];
+  var inserts = [req.body.UIUDid, req.body.storyTitle, req.body.emailAddr, req.body.meetingTime, req.body.readId, req.body.listenId];
   console.log(inserts);
   sql = mysql.pool.query(sql,inserts,function(error, results, fields){
       if(error){
@@ -60,6 +60,7 @@ router.post('/schedule', function(req, res){
       }else{
           res.redirect('/schedule');
       }
+    });
   });
 
 app.get('/about', (req, res) => {
