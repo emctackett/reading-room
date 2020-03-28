@@ -58,6 +58,10 @@ app.get('/schedule', (req, res) => {
   res.render('schedule');
 });
 
+app.get('/library', (req, res) => {
+  res.render('library');
+});
+
 app.get('/reset',function(req,res,next){
   console.log('reset')
   var context = {};
