@@ -1,0 +1,7 @@
+.about .container {
+  margin-top: 40px;
+}
+
+.about .container .list-group-item {
+  border: none;
+}
