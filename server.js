@@ -1,40 +1,8 @@
 import express from "express";
 const app = express();
 var mysql = require('./dbcon.js');
-// https://socket.io/docs/#Using-with-Node-http-server
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
 
 const fs = require('fs');
-
-//server.listen(80);
-
-io.on('connection', function(socket) {
-  socket.on('connection', socket => {
-    const existingSocket = activeSockets.find(
-      existingSocket => existingSocket === socket.id
-    );
-
-var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-
-var bodyParser = require('body-parser');
-
-
-//httpServer = createServer(app)
-//io = socketIO(httpServer);
-
-    if (!existingSocket) {
-      activeSockets.push(socket.id);
-    }
-
-    socket.on('disconnect', () => {
-      activeSockets = activeSockets.filter(
-        existingSocket => existingSocket !== socket.id
-      );
-    });
-  });
-});
-
 const port = process.env.PORT || 4000;
 
 app.use(express.static('public'));
@@ -65,7 +33,7 @@ app.get('/library', (req, res) => {
     var titles = data.split("\r\n");
     var books = []
     for (let i=0; i< (titles.length-1); i++) {
-      books.push({title: titles[i], file: titles[i].replace(/ /g,'_')}); 
+      books.push({title: titles[i], file: titles[i].replace(/ /g,'_')});
     }
     return res.render('library',{stories: books});
   });
@@ -100,8 +68,6 @@ app.get('/reset',function(req,res,next){
 app.get('/:room_id', (req, res) => {
   res.render('room');
 });
-
-
 
 app.use(function(req,res){
   res.status(404);
