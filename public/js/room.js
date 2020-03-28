@@ -24,7 +24,7 @@ $(function() {
   }
 
   function initializePeerId() {
-    // sign up for key @ https://peerjs.com/peerserver.html
+      // sign up for key @ https://peerjs.com/peerserver.html
 
     let searchParams = new URLSearchParams(window.location.search);
     const id = searchParams.get('id');
@@ -48,9 +48,9 @@ $(function() {
     });
 
     peer.on('close', function() {
-        conn = null;
-        alert("Connection destroyed. Please refresh");
-        console.log('Connection destroyed');
+      conn = null;
+      alert("Connection destroyed. Please refresh");
+      console.log('Connection destroyed');
     });
 
 
@@ -60,19 +60,20 @@ $(function() {
     });
 
     document.getElementById('conn_button').addEventListener('click', function(){
-        peer_id = document.getElementById("connId").value;
+      peer_id = document.getElementById("connId").value;
 
-        if(peer_id){
-          conn = peer.connect(peer_id)
-        }else{
-          alert("enter an id");
-          return false;
-        }
+      if(peer_id){
+        conn = peer.connect(peer_id)
+      }else{
+        alert("enter an id");
+        return false;
+      }
     });
 
     peer.on('call', call => {
       console.log('answering');
       call.answer(window.localStream); // answer call with a/v stream
+
       call.on('stream', (remoteStream) => {
         const remoteVideo = $('#remote-video');
         remoteVideo.attr('src', remoteStream);
@@ -80,48 +81,28 @@ $(function() {
       });
     });
 
+    document.getElementById('call_button').addEventListener('click', function(){
+      console.log("calling a peer:"+ peer_id)
+      console.log(peer);
 
+      const call = peer.call(peer_id, window.localStream);
 
-
-document.getElementById('call_button').addEventListener('click', function(){
-  console.log("calling a peer:"+ peer_id)
-  console.log(peer);
-
-  var call = peer.call(peer_id, window.localStream);
-  call.on('stream', (remoteStream) => {
-    const remoteVideo = $('#remote-video')[0];
-    if (remoteVideo){
-      remoteVideo.srcObject = remoteStream;
-    }
-  });
-});
-}
-
-
-  function getHostId() {
-    let searchParams = new URLSearchParams(window.location.search);
-    hostId = searchParams.get('id');
-  }
-/*
-  function callHost() {
-    console.log(`calling host: ${hostId}`);
-
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true},
-      MediaStream => {
-        const call = peer.call(hostId, MediaStream);
-        call.on('stream', (remoteStream) => {
-
-          const remoteVideo = $('#remote-video')[0];
+      call.on('stream', (remoteStream) => {
+        const remoteVideo = $('#remote-video')[0];
+        if (remoteVideo) {
           remoteVideo.srcObject = remoteStream;
-        });
+        }
       });
-  }*/
+    });
+    }
+
+
+    function getHostId() {
+      let searchParams = new URLSearchParams(window.location.search);
+      hostId = searchParams.get('id');
+    }
 
   initializePeerId();
   streamVideo();
-
-//  getHostId();
-//  if (hostId) { callHost() }
-
 
 });
