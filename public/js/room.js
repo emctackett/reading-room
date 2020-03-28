@@ -14,14 +14,10 @@ $(function() {
     );
   }
 
-  function connectSocket() {
-    // io.on('connection', socket => {
-    //   console.log('hello socket connected');
-    // });
-  }
-
-  if ($('.video-container')) {
+  if ($('.video-container')[0]) {
     streamVideo();
-    connectSocket();
+
+    //const socket = io.connect('http://localhost');
+
   }
 });

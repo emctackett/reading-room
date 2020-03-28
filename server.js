@@ -1,14 +1,17 @@
 import express from "express";
-//import socketIO, { Server as SocketIOServer } from "socket.io";
-//import createServer, { Server as HTTPServer } from "http";
-
-//import socketIO, {Server as SocketIOServer } from "socket.io";
-//import { createServer, Server as HTTP Server } from "http";
-
 const app = express();
-const port = process.env.PORT || 4000;
 
-app.use(express.static('public'));
+// https://socket.io/docs/#Using-with-Node-http-server
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
+
+//server.listen(80);
+
+io.on('connection', function(socket) {
+  socket.on('connection', socket => {
+    const existingSocket = activeSockets.find(
+      existingSocket => existingSocket === socket.id
+    );
 
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
 var mysql = require('./dbcon.js');
@@ -18,9 +21,26 @@ var bodyParser = require('body-parser');
 //httpServer = createServer(app)
 //io = socketIO(httpServer);
 
-//io.on('connection', socket => {
-  //console.log('socket connected.');
-//});
+    if (!existingSocket) {
+      activeSockets.push(socket.id);
+    }
+
+    socket.on('disconnect', () => {
+      activeSockets = activeSockets.filter(
+        existingSocket => existingSocket !== socket.id
+      );
+    });
+  });
+});
+
+const port = process.env.PORT || 4000;
+
+app.use(express.static('public'));
+
+
+const handlebars = require('express-handlebars').create({defaultLayout:'main'});
+const bodyParser = require('body-parser');
+const activeSockets = [];
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
