@@ -1,0 +1,28 @@
+<h1>The Reading Room</h1>
+
+<h2>Welcome to your reading room!</h2>
+
+<div class="video-container">
+  <div class="row">
+    <div class="col-6">
+      <div class="float-sm-left">
+      <video autoplay width="160" height="120" id="local-video" muted></video>
+      </div>
+      <video autoplay id="remote-video"></video>
+    </div>
+    <div class="col-6">
+
+    </div>
+  </div>
+</div>
+
+<span id = "displayId"></span>
+<!--<input type="text" id="connId" class="form-control" placeholder"enter connection id" required>
+<button type="button" id='conn_button' class="btn btn-success">Connect</button>-->
+<button type="button" id='call_button' class="btn btn-success btn-lg">Call</button>
+<button type="button" class="btn btn-danger btn-lg">Stop</button>
+</div>
+
+<h1 style="visibility: hidden" id='bookTitle'>{{room.title}}</h1>
+<h1 style="visibility: hidden" id='readerId'>{{room.reader}}</h1>
+<h1 style="visibility: hidden" id='listenerId'>{{room.listener}}</h1>
