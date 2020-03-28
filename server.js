@@ -1,6 +1,6 @@
 import express from "express";
 const app = express();
-
+var mysql = require('./dbcon.js');
 // https://socket.io/docs/#Using-with-Node-http-server
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -14,7 +14,7 @@ io.on('connection', function(socket) {
     );
 
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-var mysql = require('./dbcon.js');
+
 var bodyParser = require('body-parser');
 
 
@@ -56,6 +56,10 @@ app.get('/', (req, res) => {
 
 app.get('/schedule', (req, res) => {
   res.render('schedule');
+});
+
+app.get('/library', (req, res) => {
+  res.render('library');
 });
 
 app.get('/reset',function(req,res,next){
