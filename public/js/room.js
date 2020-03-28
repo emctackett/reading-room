@@ -17,7 +17,10 @@ $(function() {
   if ($('.video-container')[0]) {
     streamVideo();
 
-    //const socket = io.connect('http://localhost');
+    const peer = new Peer({key: 'lwjd5qra8257b9'});
 
+    peer.on('open', function(id) {
+      console.log('my peer ID is: ' + id);
+    });
   }
 });
