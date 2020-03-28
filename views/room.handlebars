@@ -1,6 +1,25 @@
 <h2>Welcome to your reading room!</h2>
 
 <div class="video-container">
-  <video autoplay id="remote-video"></video>
-  <video autoplay id="local-video"></video>
+  <div class="row">
+    <div class="col-sm">
+      Remote
+      <video autoplay id="remote-video"></video>
+    </div>
+    <div class="col-sm">
+      Local
+      <video autoplay id="local-video" muted></video>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<span id = "displayId"></span>
+<input type="text" id="connId" class="form-control" placeholder"enter connection id" required>
+<button type="button" id='conn_button' class="btn btn-success">Connect</button>
+<button type="button" id='call_button' class="btn btn-alert">Call</button>
+<button type="button" class="btn btn-danger">Stop</button>
 </div>
