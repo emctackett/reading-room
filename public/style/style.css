@@ -1,7 +1,24 @@
+.masthead {
+  text-align: center;
+}
+
 .about .container {
   margin-top: 40px;
 }
 
 .about .container .list-group-item {
   border: none;
+}
+
+.container p {
+  margin: 40px 20px;
+}
+
+#site-heading {
+  margin-bottom: 30px;
+  font-size: 72px;
+}
+
+#new-room {
+  margin: 20px 0;
 }
