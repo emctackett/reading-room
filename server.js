@@ -5,6 +5,8 @@ var mysql = require('./dbcon.js');
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
+const fs = require('fs');
+
 //server.listen(80);
 
 io.on('connection', function(socket) {
