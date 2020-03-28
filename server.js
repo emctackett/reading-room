@@ -28,6 +28,10 @@ app.get('/schedule', (req, res) => {
   res.render('schedule');
 });
 
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
 app.get('/library', (req, res) => {
   fs.readFile('public/txt/contents.txt', 'utf8', function(err, data) {
     var titles = data.split("\r\n");
