@@ -1,3 +1,4 @@
+
 $(function() {
   function streamVideo() {
     navigator.getUserMedia(
@@ -17,7 +18,25 @@ $(function() {
   if ($('.video-container')[0]) {
     streamVideo();
 
-    //const socket = io.connect('http://localhost');
+        //const socket = io.connect('http://localhost');
+    const peer = new Peer({key: 'lwjd5qra8257b9'});
 
+    peer.on('open', function(id) {
+      console.log('my peer ID is: ' + id);
+
+      // append the url to send to the peer host when joining the call
+      var copyText = document.createElement('textarea');
+      copyText.value = $(location).attr + "?id=" + id;
+      copyText.style.visibility = "hidden";
+      copyText.id = "copyText";
+      document.body.appendChild(copyText);
+
+      $('#copyLink').onclick = function() {
+        $('#copyText').select();
+        document.execCommand('copy');
+      }
+    });
   }
+
+  function getLink(onclick)
 });
