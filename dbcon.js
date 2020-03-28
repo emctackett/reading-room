@@ -2,8 +2,8 @@ var mysql = require('mysql');
 var pool = mysql.createPool({
   connectionLimit : 10,
   host            : 'us-cdbr-iron-east-01.cleardb.net',
-  user            : 'b5b9bd7379cc31',
-  password        : '22009cdd',
-  database        : 'heroku_04f033e8b3507a2'
+  user            : process.env.CLEARDB_KEY,
+  password        : process.env.CLEARDB_SECRET,
+  database        : process.env.CLEARDB_DB
 });
 module.exports.pool = pool;
