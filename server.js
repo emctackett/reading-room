@@ -7,6 +7,7 @@ const io = require('socket.io')(server);
 
 
 io.on('connection', function(socket) {
+  console.log('Client connected');
   socket.on('connection', socket => {
     const existingSocket = activeSockets.find(
       existingSocket => existingSocket === socket.id
@@ -17,6 +18,7 @@ io.on('connection', function(socket) {
     }
 
     socket.on('disconnect', () => {
+      console.log('Client disconnected=');
       activeSockets = activeSockets.filter(
         existingSocket => existingSocket !== socket.id
       );
