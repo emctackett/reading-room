@@ -85,26 +85,26 @@ $(function() {
 
 
   document.getElementById('call_button').addEventListener('click', function(){
-  peer_id = document.getElementById("readerId").innerHTML;
+    peer_id = document.getElementById("readerId").innerHTML;
 
-  if(peer_id){
-    conn = peer.connect(peer_id)
-  }else{
-    alert("enter an id");
-    return false;
-  }
-
-  console.log("calling a peer:"+ peer_id)
-  console.log(peer);
-
-  var call = peer.call(peer_id, window.localStream);
-  call.on('stream', (remoteStream) => {
-    const remoteVideo = $('#remote-video')[0];
-    if (remoteVideo){
-      remoteVideo.srcObject = remoteStream;
+    if(peer_id){
+      conn = peer.connect(peer_id)
+    }else{
+      alert("enter an id");
+      return false;
     }
-  });
-  });
+
+    console.log("calling a peer:"+ peer_id);
+    console.log(peer);
+
+    var call = peer.call(peer_id, window.localStream);
+      call.on('stream', (remoteStream) => {
+        const remoteVideo = $('#remote-video')[0];
+        if (remoteVideo){
+          remoteVideo.srcObject = remoteStream;
+        }
+      });
+    });
   }
 
 
@@ -129,7 +129,4 @@ $(function() {
 
   initializePeerId();
   streamVideo();
-
-  //  getHostId();
-  //  if (hostId) { callHost() }
-  });
+});

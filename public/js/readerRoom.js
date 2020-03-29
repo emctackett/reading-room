@@ -115,12 +115,6 @@ $(function() {
     $(btn).addClass('btn-danger');
   }
 
-  function renderConnectButton(btn) {
-    $(btn).html('Video chat with Listener');
-    $(btn).removeClass('btn-danger');
-    $(btn).addClass('btn-success');
-  }
-
   $('#call_button').on('click', function(e){
     const button = e.target;
     const status = $(button).attr('data-connected');
