@@ -10,4 +10,5 @@ If you are the listener:
 <a href="/listenerRoom/{{room.UIUD}}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Enter Here</a>
 <br />
 <h3>Reader Link:</h3>
-\readerRoom\ {{room.UIUD}}
+<button class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true" id="copyLink" onclick="copyLink()">Copy Reader Link</button>
+<textarea style="visibility: hidden" id="readerLink" value="https://reading-room.herokuapp.com//readerRoom/{{room.UIUD}}">https://reading-room.herokuapp.com//readerRoom/{{room.UIUD}}</textarea>

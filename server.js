@@ -51,51 +51,52 @@ function getText(title, context, complete) {
 
     var dataPos = 0;
 
-    while(!data[dataPos].match(/\r/)) {
-      storyTitle = storyTitle + data[dataPos];
-      dataPos++;
-    }
-    data = data.replace(/\r\n/g,' ');
+    if(data.type != undefined) {
+      while(!data[dataPos].match(/\r/)) {
+        storyTitle = storyTitle + data[dataPos];
+        dataPos++;
+      }
+      data = data.replace(/\r\n/g,' ');
 
-    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
-      if(lineStart) {
-        if(!data[i].match(space)) {
-          if(!data[i].match(openQuote)) {
-            quote = false;
-          } else{
-            quote = true;
-          }
-          lineStart = false;
-        }
-        nextLine = nextLine + data[i];
-      } else {
-        if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
-          lineStart = true;
-        }
-        if(!quote && data[i].match(punctuationEnd)) {
-          lineStart = true;
-        }
-        nextLine = nextLine + data[i];
+      for(var i=dataPos; i<Buffer.byteLength(data); i++) {
         if(lineStart) {
-          storyText.push(nextLine);
-          if(nextLine.includes("THE END.")) {
-            i = Buffer.byteLength(data) + 1000;
+          if(!data[i].match(space)) {
+            if(!data[i].match(openQuote)) {
+              quote = false;
+            } else{
+              quote = true;
+            }
+            lineStart = false;
           }
-          nextLine = "";
+          nextLine = nextLine + data[i];
+        } else {
+          if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
+            lineStart = true;
+          }
+          if(!quote && data[i].match(punctuationEnd)) {
+            lineStart = true;
+          }
+          nextLine = nextLine + data[i];
+          if(lineStart) {
+            storyText.push(nextLine);
+            if(nextLine.includes("THE END.")) {
+              i = Buffer.byteLength(data) + 1000;
+            }
+            nextLine = "";
+          }
         }
       }
-    }
 
-    context.title = storyTitle;
-    context.text = storyText;
-    console.log(context);
+      context.title = storyTitle;
+      context.text = storyText;
+    }
     complete()
   });
 }
 
 app.get('/', (req, res) => {
   var context = {};
-  context.jsscripts = ["home.js"];
+
   res.render('home', context);
 });
 
@@ -125,7 +126,7 @@ app.post('/schedule', function(req, res){
         function complete(){
           callbackCount++;
           if(callbackCount >= 1){
-            console.log(context);
+            context.jsscripts = ["schedule.js"];
             res.render('gotoRooms', context);
           }
         }
@@ -243,7 +244,6 @@ app.get('/readerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
         res.render('readerRoom', context);
       }
     }
@@ -258,7 +258,6 @@ app.get('/listenerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
         res.render('room', context);
       }
     }

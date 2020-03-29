@@ -15,4 +15,5 @@ $(function() {
     document.getElementById("readId").value = generateUniqueId();
     document.getElementById("listenId").value = generateUniqueId();
     document.getElementById("meetingTime").value = dateTime;
+    document.getElementById("meetingTime").min = dateTime;
 });
