@@ -8,7 +8,7 @@ $(function() {
 //  let localStream;
   function streamVideo() {
     navigator.getUserMedia = navigator.GetUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-    navigator.getUserMedia(
+    navigator.mediaDevices.getUserMedia(
       { video: true, audio: true },
       stream => {
         const localVideo = $('#local-video')[0];
