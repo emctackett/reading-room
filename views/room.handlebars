@@ -1,12 +1,12 @@
 
 <!-- <h1>The Reading Room</h1>-->
-<div class="container">
+<div class="container mt-3">
   <div class="row">
     <h2 class="text-left" id="welcome">Welcome to your reading room! You are reading {{title}}.</h2>
     <!-- <span id = "displayId" hidden></span> -->
     <!--<input type="text" id="connId" class="form-control" placeholder"enter connection id" required>
     <button type="button" id='conn_button' class="btn btn-success">Connect</button>-->
-    <button type="button" id='call_button' class="btn btn-success btn-lg" data-connected="false">
+    <button type="button" id='call_button' class="btn btn-success btn-lg text-center" data-connected="false">
       Video Chat with Reader
     </button>
     </div>
@@ -16,10 +16,14 @@
 
 <div class="video-container float">
   <div class="row">
-    <div class="col-12">
-      <video autoplay class="img-thumbnail text-right" id="remote-video" style="height: 80%"></video>
+    <div class="col-1"></div>
+    <div class="col-8">
+      <video autoplay class="img-thumbnail text-right" id="remote-video" style="height: 100%"></video>
+    </div>
+    <div class="col-2">
       <video autoplay class="img-thumbnail text-left" id="local-video" style="height:20%" style="float: right" muted></video>
     </div>
+    <div class="col-1"></div>
   </div>
 </div>
 
