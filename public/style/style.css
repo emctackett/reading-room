@@ -14,6 +14,19 @@
   margin: 40px 20px;
 }
 
+.homepage {
+  font-size: 18px;
+}
+
+/* .homepage .list-group {
+  list-style-type: circle;
+} */
+
+/* .homepage .container .list-group-item {
+  border: none;
+  list-style-type: circle;
+} */
+
 #site-heading {
   margin-bottom: 30px;
   font-size: 72px;
