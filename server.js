@@ -99,46 +99,38 @@ app.get('/reset',function(req,res,next){
 });
 
 app.get('/:room_id', (req, res) => {
-  var storyFile = "public/txt/THE_GOLDEN_BIRD.txt"
+  var storyFile = "public/txt/RAPUNZEL.txt"
   fs.readFile(storyFile, 'utf8', function(err, data) {
     var storyText = [];
     var storyTitle = "";
     var nextLine = "";
     var lineStart = true;
-    var punctuationEnd = /[.?!]/;
+    var punctuationEnd = /[:.?!]/;
     var space = / /;
-    var openQuote = ['/', String.fromCharCode(2018), '/'].join('');
-    var closeQuote = ['/',String.fromCharCode(2019),'/'].join('');
-    var endingStar = ['/',String.fromCharCode(42),'/'].join('');
+    var openQuote = /[']/;
+    var closeQuote = /[']/;
+    console.log(String.fromCharCode(8217));
     var quote = false;
 
     var dataPos = 0;
 
     while(!data[dataPos].match(/\r/)) {
-      storyTitle = data[dataPos];
+      storyTitle = storyTitle + data[dataPos];
       dataPos++;
     }
     data = data.replace(/\r\n/g,' ');
 
-    console.log(Buffer.byteLength(data));
     for(var i=dataPos; i<Buffer.byteLength(data); i++) {
       if(lineStart) {
-        if(!data[i].match(endingStar)) {
-          if(!data[i].match(space)) {
-            if(!data[i].match(openQuote)) {
-              quote = false;
-            } else{
-              quote = true;
-            }
-            lineStart = false;
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
           }
-          nextLine = nextLine + data[i];
-        } else {
-          console.log("found the star");
-          if(data[i+1].match(endingStar) && data[i+2].match(endingStar)) {
-            i = Buffer.byteLength(data) + 1000;
-          }
+          lineStart = false;
         }
+        nextLine = nextLine + data[i];
       } else {
         if(quote && data[i].match(closeQuote)) {
           lineStart = true;
@@ -149,8 +141,6 @@ app.get('/:room_id', (req, res) => {
         nextLine = nextLine + data[i];
         if(lineStart) {
           storyText.push(nextLine);
-          console.log(nextLine);
-          console.log(i);
           if(nextLine.includes("THE END.")) {
             i = Buffer.byteLength(data) + 1000;
           }
@@ -158,10 +148,9 @@ app.get('/:room_id', (req, res) => {
         }
       }
     }
-
-    res.render('room', {title: storyTitle}, {text: storyText})
-  })
-  res.render('room');
+    console.log("PROCESSD THE STORY");
+    return res.render('room', {title: storyTitle, text: storyText});
+  });
 });
 
 

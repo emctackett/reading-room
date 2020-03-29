@@ -17,23 +17,24 @@
 <div id="storyCarousel" class="carousel slide carousel-fade" data-wrap="false" data-interval="false">
   <ol class="carousel-indicators">
     <li data-target="#storyCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#storyCarousel" data-slide-to="1"></li>
-    <li data-target="#storyCarousel" data-slide-to="2"></li>
+    {{#each text}}
+    <li data-target="#storyCarousel" data-slide-to="{{@index_1}}"></li>
+    {{/each}}
   </ol>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px">
-        <h1 class="display-4">Book Title</h1>
+      <div class="jumbotron jumbotron-fluid mb-0">
+        <h1 class="display-4 text-center ml-5 mr-5">{{title}}</h1>
       </div>
     </div>
+    {{#each text}}
     <div class="carousel-item">
       <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px">
-        <h2 class="display-4">Sentece 1</h2>
+        <h3 class="display-4 text-center ml-5 mr-5">{{this}}</h3>
       </div>
     </div>
-    <div class="carousel-item">
-      <img src="..." class="d-block w-100" alt="..." >
-    </div>
+    {{/each}}
+
   </div>
   <a class="carousel-control-prev" href="#storyCarousel" role="button" data-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>

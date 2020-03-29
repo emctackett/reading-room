@@ -125,3 +125,8 @@ document.getElementById('call_button').addEventListener('click', function(){
 
 
 });
+
+//from stackoverflow https://stackoverflow.com/questions/28007899/handlebars-template-best-way-to-add-incrementing-variable
+Handlebars.registerHelper("inc", function(value, options) {
+  return parseInt(value) + 1;
+});
