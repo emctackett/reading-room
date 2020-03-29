@@ -34,14 +34,11 @@ $(function() {
     peer.on('open', function(id) {
       peerId = id;
       console.log('my peer ID is: ' + id);
-      //$(`<p>Your peer id is ${peerId}</p>`).insertAfter(heading);
     });
 
     peer.on('connection', function(connection){
       conn = connection
-      peer_id = connection.peer
-
-      //document.getElementById('connId').value = peer_id;
+      peer_id = connection.peer;
     });
 
     peer.on('close', function() {
@@ -53,18 +50,6 @@ $(function() {
       alert("an error has occured:" + err);
       console.log(err);
     });
-
-  /*  document.getElementById('conn_button').addEventListener('click', function(){
-        peer_id = document.getElementById("connId").value;
-
-        if(peer_id){
-          conn = peer.connect(peer_id)
-        }else{
-          alert("enter an id");
-          return false;
-        }
-    });
-    */
 
     peer.on('call', call => {
       console.log('answering');

@@ -38,7 +38,6 @@ function getRoomDetails(res, mysql, context, id, complete){
       res.end();
     }
     context.room = results[0];
-    console.log(context);
     complete();
   });
 }
@@ -46,14 +45,14 @@ function getRoomDetails(res, mysql, context, id, complete){
 function getRoom(res, mysql, context, id, complete){
   var sql = "SELECT title, reader, listener, UIUD, email, start_time FROM sessions WHERE UIUD = ?";
   var inserts = [id];
-  console.log(inserts)
+
   mysql.pool.query(sql, inserts, function(error,results,fields){
     if(error){
       res.write(JSON.stringify(error));
       res.end();
     }
     context.room = results[0];
-    console.log(context);
+
     if (context.room == undefined) {
       complete();
     } else {
@@ -64,7 +63,7 @@ function getRoom(res, mysql, context, id, complete){
 
 function getText(title, context, complete) {
   var storyFile = "public/txt/" + title.toUpperCase().replace(/ /g,'_') + ".txt"
-//  console.log(storyFile);
+
   fs.readFile(storyFile, 'utf8', function(err, data) {
     var storyText = [];
     var storyTitle = "";
@@ -119,7 +118,7 @@ function getText(title, context, complete) {
 
     context.title = storyTitle;
     context.text = storyText;
-//    console.log(context);
+
     complete()
   });
 }
@@ -128,7 +127,6 @@ app.get('/', (req, res) => {
   var context = {};
   context.jsscripts = ["home.js"];
   res.render('home', context);
-
 });
 
 app.get('/schedule', (req, res) => {
@@ -152,11 +150,10 @@ app.post('/schedule', function(req, res){
   };
   sql = mysql.pool.query(sql,inserts,function(error, results, fields){
       if(error){
-          console.log(JSON.stringify(error))
-          res.write(JSON.stringify(error));
-          res.end();
-      }else{
-        console.log(context)
+        console.log(JSON.stringify(error))
+        res.write(JSON.stringify(error));
+        res.end();
+      } else {
         context.jsscripts = ["goto.js"];
         getRoomDetails(res, mysql, context, req.body.UIUDid, complete);
         function complete(){
@@ -165,7 +162,7 @@ app.post('/schedule', function(req, res){
             if(req.body.emailAddr != ''){
               transporter.sendMail(message, function (err, info) {
                 if(err){console.log(err)}
-                  else{console.log(info);}
+                  //else{console.log(info);}
               });
             }
             res.render('gotoRooms', context);
@@ -200,7 +197,6 @@ app.get('/readerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
         res.render('readerRoom', context);
       }
     }
@@ -215,7 +211,6 @@ app.get('/listenerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
         res.render('room', context);
       }
     }
