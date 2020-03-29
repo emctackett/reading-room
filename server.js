@@ -57,7 +57,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/schedule', (req, res) => {
-  res.render('schedule');
+  var jscript = "schedule.js"
+  res.render('schedule',{jscript: jscript});
 });
 
 app.get('/library', (req, res) => {
@@ -98,6 +99,57 @@ app.get('/reset',function(req,res,next){
 });
 
 app.get('/:room_id', (req, res) => {
+  var storyFile = "public/txt/THE_GOLDEN_BIRD.txt"
+  fs.readFile(storyFile, 'utf8', function(err, data) {
+    var storyText = [];
+    var storyTitle = "";
+    var nextLine = "";
+    var lineStart = true;
+    var punctuationEnd = /[.?!]/;
+    var space = / /;
+    var openQuote = ['/', String.fromCharCode(2018), '/'].join('');
+    var closeQuote = ['/',String.fromCharCode(2019),'/'].join('');
+    var quote = false;
+
+    var dataPos = 0;
+
+    while(!data[dataPos].match(/\r/)) {
+      storyTitle = data[dataPos];
+      dataPos++;
+    }
+    data = data.replace(/\r\n/g,' ');
+
+    console.log(Buffer.byteLength(data));
+    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
+      if(lineStart) {
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
+          }
+          lineStart = false;
+        }
+        nextLine = nextLine + data[i];
+      } else {
+        if(quote && data[i].match(closeQuote)) {
+          lineStart = true;
+        }
+        if(!quote && data[i].match(punctuationEnd)) {
+          lineStart = true;
+        }
+        nextLine = nextLine + data[i];
+        if(lineStart) {
+          storyText.push(nextLine);
+          console.log(nextLine);
+          console.log(i);
+          nextLine = "";
+        }
+      }
+    }
+
+    res.render('room', {title: storyTitle}, {text: storyText})
+  })
   res.render('room');
 });
 
