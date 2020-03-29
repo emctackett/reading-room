@@ -105,7 +105,7 @@ app.get('/:room_id', (req, res) => {
     var storyTitle = "";
     var nextLine = "";
     var lineStart = true;
-    var punctuationEnd = /[:.?!]/;
+    var punctuationEnd = /[:,.?!]/;
     var space = / /;
     var openQuote = /[']/;
     var closeQuote = /[']/;
@@ -132,7 +132,7 @@ app.get('/:room_id', (req, res) => {
         }
         nextLine = nextLine + data[i];
       } else {
-        if(quote && data[i].match(closeQuote)) {
+        if(quote && data[i].match(closeQuote) && data[i+1].match(space)) {
           lineStart = true;
         }
         if(!quote && data[i].match(punctuationEnd)) {
