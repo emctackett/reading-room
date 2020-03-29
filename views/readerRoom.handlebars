@@ -1,15 +1,25 @@
-<main>
-<h1>The Reading Room</h1>
+<main class="mt-0 young-passion-gradient">
 
-<h2>Welcome to your reading room!</h2>
+<!-- <h1>The Reading Room</h1> -->
+<div class="container">
+  <div class="row mt-3">
+    <h1>Welcome to your reading room! You are reading {{title}}.</h1>
+    <span id = "displayId"></span>
+    <button type="button" id='call_button' class="btn btn-success btn-md" data-connected="false">
+      Video Chat with Listener
+    </button>
+  </div>
+</div>
 
 <div class="video-container">
   <div class="row">
-    <div class="col-6">
-      <video autoplay id="remote-video"></video>
+    <div class="col-2"></div>
+    <div class="col-8">
+      <video autoplay id="remote-video" class="img-thumbnail"></video>
+      <h3 id="placeholderTxt">Waiting for the listener...</h3>
     </div>
-    <div class="col-6">
-      <video autoplay id="local-video" muted></video>
+    <div class="col-2">
+      <video autoplay id="local-video" class="img-thumbnail" style="height: 30%" muted></video>
     </div>
   </div>
 </div>
@@ -24,13 +34,25 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="jumbotron jumbotron-fluid mb-0">
-        <h1 class="display-4 text-center ml-5 mr-5">{{title}}</h1>
+        <div class="row>">
+          <div class="col-2"></div>
+          <div class="col-10">
+            <h1 class="display-4 text-center ml-5 mr-5">{{title}}</h1>
+          </div>
+          <div class="col-2"></div>
+        </div>
       </div>
     </div>
     {{#each text}}
     <div class="carousel-item">
-      <div class="jumbotron jumbotron-fluid" style="margin-bottom: 0px">
-        <h3 class="display-4 text-center ml-5 mr-5">{{this}}</h3>
+      <div class="jumbotron jumbotron-fluid mb-0">
+        <div class="row>">
+          <div class="col-2"></div>
+          <div class="col-10">
+            <h3 class="display-4 text-center ml-5 mr-5">{{this}}</h3>
+          </div>
+          <div class="col-2"></div>
+        </div>
       </div>
     </div>
     {{/each}}
@@ -46,13 +68,9 @@
   </a>
 </div>
 
-<span id = "displayId"></span>
-<button type="button" id='call_button' class="btn btn-success btn-lg" data-connected="false">
-  Video Chat with Listener
-</button>
-</div>
-
 <h1 style="visibility: hidden" id='bookTitle'>{{room.title}}</h1>
 <h1 style="visibility: hidden" id='readerId'>{{room.reader}}</h1>
 <h1 style="visibility: hidden" id='listenerId'>{{room.listener}}</h1>
+
+
 </main>
