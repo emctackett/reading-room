@@ -7,6 +7,7 @@ The Reading Room is a fun way to connect book lovers of all ages, even in times 
 - [Node.js](https://nodejs.org/en/)
 - [Express](https://expressjs.com/)
 - [Handlebars](https://handlebarsjs.com/)
+- [Bootstrap](https://getbootstrap.com/)
 - [MySQL](https://www.mysql.com/)
 - [PeerJs](https://peerjs.com/)
 - [jQuery](https://jquery.com/)
