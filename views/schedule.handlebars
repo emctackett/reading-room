@@ -1,13 +1,17 @@
 
 <main>
-  <h1>The Reading Room</h1>
-  <div>
-    <h2>Schedule New Session</h2>
+  <div class="jumbotron jumbotron-fluid aqua-gradient">
+    <div class="masthead container">
+      <h1 class="display-4" id="site-heading">The Reading Room</h1>
+      <h2 class="display-5">Fill out the form below to schedule a new session.</h2>
+    </div>
   </div>
+  <div class="container">
   <form id="addRoom" action="/schedule" method="post">
     <div class="form-group">
       <label for="emailAddr">Email address</label>
       <input type="email" class="form-control" id="emailAddr" name="emailAddr" placeholder="name@example.com">
+      Note: You will receive an email verification, to opt out leave this blank.
       <input type="hidden" id="UIUDid" name="UIUDid" value="">
       <input type="hidden" id="readId" name="readId" value="">
       <input type="hidden" id="listenId" name="listenId" value="">
@@ -89,4 +93,5 @@
     </div>
       <input type="submit" value="Submit">
   </form>
+</div>
 </main>
