@@ -29,8 +29,9 @@ $(function() {
     const id = document.getElementById('listenerId').innerHTML
     var conn;
     var peer_id;
+
     peer = new Peer(id);
-    const heading = $('h2');
+    const heading = $('#welcome');
     let peerId;
 
     peer.on('open', function(id) {
@@ -131,6 +132,4 @@ $(function() {
 
   //  getHostId();
   //  if (hostId) { callHost() }
-
-
   });

@@ -3,7 +3,7 @@ THE MOUSE, THE BIRD, AND THE SAUSAGE
 Once upon a time, a mouse, a bird, and a sausage, entered into
 partnership and set up house together. For a long time all went well;
 they lived in great comfort, and prospered so far as to be able to add
-considerably to their stores. The bird’s duty was to fly daily into the
+considerably to their stores. The bird's duty was to fly daily into the
 wood and bring in fuel; the mouse fetched the water, and the sausage saw
 to the cooking.
 
@@ -64,3 +64,5 @@ to recover himself, he was drowned.
 
 
 
+THE END.
+*****

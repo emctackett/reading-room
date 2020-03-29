@@ -10,7 +10,16 @@ app.use(express.static('public'));
 
 const handlebars = require('express-handlebars').create({defaultLayout:'main'});
 const bodyParser = require('body-parser');
-const activeSockets = [];
+const nodemailer = require("nodemailer");
+
+var transporter = nodemailer.createTransport({
+ service: 'gmail',
+ auth: {
+        user: 'reading2020room@gmail.com',
+        pass: 'pw1234pw'
+    }
+});
+
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -20,7 +29,7 @@ app.set('view engine', 'handlebars');
 app.set('mysql', mysql);
 
 function getRoom(res, mysql, context, id, complete){
-  var sql = "SELECT title, reader, listener, UIUD, email FROM sessions WHERE UIUD = ?";
+  var sql = "SELECT title, reader, listener, UIUD, email, start_time FROM sessions WHERE UIUD = ?";
   var inserts = [id];
   console.log(inserts)
   mysql.pool.query(sql, inserts, function(error,results,fields){
@@ -30,15 +39,74 @@ function getRoom(res, mysql, context, id, complete){
     }
     context.room = results[0];
     console.log(context);
-    complete();
+    getText(context.room.title, context, complete);
   });
 }
 
+function getText(title, context, complete) {
+  var storyFile = "public/txt/" + title.toUpperCase().replace(/ /g,'_') + ".txt"
+  console.log(storyFile);
+  fs.readFile(storyFile, 'utf8', function(err, data) {
+    var storyText = [];
+    var storyTitle = "";
+    var nextLine = "";
+    var lineStart = true;
+    var punctuationEnd = /[:,.?!]/;
+    var space = / /;
+    var letter = /[A-Za-z]/;
+    var openQuote = /[']/;
+    var closeQuote = /[']/;
+    var quote = false;
+
+    var dataPos = 0;
+
+    while(!data[dataPos].match(/\r/)) {
+      storyTitle = storyTitle + data[dataPos];
+      dataPos++;
+    }
+    data = data.replace(/\r\n/g,' ');
+
+    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
+      if(lineStart) {
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
+          }
+          lineStart = false;
+        }
+        nextLine = nextLine + data[i];
+      } else {
+        if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
+          lineStart = true;
+        }
+        if(!quote && data[i].match(punctuationEnd)) {
+          lineStart = true;
+        }
+        nextLine = nextLine + data[i];
+        if(lineStart) {
+          storyText.push(nextLine);
+          if(nextLine.includes("THE END.")) {
+            i = Buffer.byteLength(data) + 1000;
+          }
+          nextLine = "";
+        }
+      }
+    }
+
+    context.title = storyTitle;
+    context.text = storyText;
+    console.log(context);
+    complete()
+  });
+}
 
 app.get('/', (req, res) => {
   var context = {};
   context.jsscripts = ["home.js"];
   res.render('home', context);
+
 });
 
 app.get('/schedule', (req, res) => {
@@ -56,17 +124,29 @@ app.post('/schedule', function(req, res){
   var sql = "INSERT INTO sessions (UIUD, title, email, start_time, reader, listener) VALUES (?,?,?,?,?,?)";
   var inserts = [req.body.UIUDid, req.body.storyTitle, req.body.emailAddr, req.body.meetingTime, req.body.readId, req.body.listenId];
   console.log(inserts);
-  var context = {}
+  var message = {
+    from: "reading2020room@gmail.com",
+    to: req.body.emailAddr,
+    subject: "Reading Rooom Reservation",
+    text: 'Hello, You have signed up for a reading session at '+req.body.meetingTime+'. If you are the listener, you may reach your room at: https://reading-room.herokuapp.com/listenerRoom/'+req.body.UIUDid+'  If you are the reader, you may reach your room at:  https://reading-room.herokuapp.com/readerRoom/'+req.body.UIUDid+'  Have a wonderful day! Best, The Reading Room Team',
+    html: '<p>Hello,</p><br><p>You have signed up for a reading session at '+req.body.meetingTime+'.</p><p>If you are the listener, you may reach your room at:<br><br><a href="https://reading-room.herokuapp.com/listenerRoom/'+req.body.UIUDid+'">https://reading-room.herokuapp.com/listenerRoom/'+req.body.UIUDid+'</a><br><br>If you are the reader, you may reach your room at:<br><a href="https://reading-room.herokuapp.com/readerRoom/'+req.body.UIUDid+'">https://reading-room.herokuapp.com/readerRoom/'+req.body.UIUDid+'</a></p><br>Have a wonderful day!<br><br>Best,<br>The Reading Room Team'
+  };
+  console.log(message)
   sql = mysql.pool.query(sql,inserts,function(error, results, fields){
       if(error){
           console.log(JSON.stringify(error))
           res.write(JSON.stringify(error));
           res.end();
       }else{
+        console.log(context)
         getRoom(res, mysql, context, req.body.UIUDid, complete);
         function complete(){
           callbackCount++;
           if(callbackCount >= 1){
+            transporter.sendMail(message, function (err, info) {
+             if(err){console.log(err)}
+             else{console.log(info);}
+            });
             console.log(context);
             res.render('gotoRooms', context);
           }
@@ -116,6 +196,65 @@ app.get('/reset',function(req,res,next){
     });
   });
 });
+
+app.get('/:room_id', (req, res) => {
+  var context = {}
+  var storyFile = "public/txt/RAPUNZEL.txt"
+  fs.readFile(storyFile, 'utf8', function(err, data) {
+    var storyText = [];
+    var storyTitle = "";
+    var nextLine = "";
+    var lineStart = true;
+    var punctuationEnd = /[:,.?!]/;
+    var space = / /;
+    var letter = /[A-Za-z]/;
+    var openQuote = /[']/;
+    var closeQuote = /[']/;
+    var quote = false;
+
+    var dataPos = 0;
+
+    while(!data[dataPos].match(/\r/)) {
+      storyTitle = storyTitle + data[dataPos];
+      dataPos++;
+    }
+    data = data.replace(/\r\n/g,' ');
+
+    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
+      if(lineStart) {
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
+          }
+          lineStart = false;
+        }
+        nextLine = nextLine + data[i];
+      } else {
+        if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
+          lineStart = true;
+        }
+        if(!quote && data[i].match(punctuationEnd)) {
+          lineStart = true;
+        }
+        nextLine = nextLine + data[i];
+        if(lineStart) {
+          storyText.push(nextLine);
+          if(nextLine.includes("THE END.")) {
+            i = Buffer.byteLength(data) + 1000;
+          }
+          nextLine = "";
+        }
+      }
+    }
+
+    context.title = storyTitle;
+    context.text = storyText;
+    return res.render('room', context);
+  });
+});
+
 
 app.get('/readerRoom/:room_id', (req, res) => {
   var callbackCount = 0;
