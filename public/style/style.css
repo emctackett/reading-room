@@ -15,17 +15,12 @@
 }
 
 .homepage {
-  font-size: 18px;
+  font-size: 20px;
 }
 
-/* .homepage .list-group {
-  list-style-type: circle;
-} */
-
-/* .homepage .container .list-group-item {
+.homepage .container .list-group-item {
   border: none;
-  list-style-type: circle;
-} */
+}
 
 #site-heading {
   margin-bottom: 30px;
