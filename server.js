@@ -30,10 +30,68 @@ function getRoom(res, mysql, context, id, complete){
     }
     context.room = results[0];
     console.log(context);
-    complete();
+    getText(context.room.title, context, complete);
   });
 }
 
+function getText(title, context, complete) {
+  var storyFile = "public/txt/" + title.toUpperCase().replace(/ /g,'_') + ".txt"
+  console.log(storyFile);
+  fs.readFile(storyFile, 'utf8', function(err, data) {
+    var storyText = [];
+    var storyTitle = "";
+    var nextLine = "";
+    var lineStart = true;
+    var punctuationEnd = /[:,.?!]/;
+    var space = / /;
+    var letter = /[A-Za-z]/;
+    var openQuote = /[']/;
+    var closeQuote = /[']/;
+    var quote = false;
+
+    var dataPos = 0;
+
+    while(!data[dataPos].match(/\r/)) {
+      storyTitle = storyTitle + data[dataPos];
+      dataPos++;
+    }
+    data = data.replace(/\r\n/g,' ');
+
+    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
+      if(lineStart) {
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
+          }
+          lineStart = false;
+        }
+        nextLine = nextLine + data[i];
+      } else {
+        if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
+          lineStart = true;
+        }
+        if(!quote && data[i].match(punctuationEnd)) {
+          lineStart = true;
+        }
+        nextLine = nextLine + data[i];
+        if(lineStart) {
+          storyText.push(nextLine);
+          if(nextLine.includes("THE END.")) {
+            i = Buffer.byteLength(data) + 1000;
+          }
+          nextLine = "";
+        }
+      }
+    }
+
+    context.title = storyTitle;
+    context.text = storyText;
+    console.log(context);
+    complete()
+  });
+}
 
 app.get('/', (req, res) => {
   var context = {};
@@ -118,6 +176,7 @@ app.get('/reset',function(req,res,next){
 });
 
 app.get('/:room_id', (req, res) => {
+  var context = {}
   var storyFile = "public/txt/RAPUNZEL.txt"
   fs.readFile(storyFile, 'utf8', function(err, data) {
     var storyText = [];
@@ -126,9 +185,9 @@ app.get('/:room_id', (req, res) => {
     var lineStart = true;
     var punctuationEnd = /[:,.?!]/;
     var space = / /;
+    var letter = /[A-Za-z]/;
     var openQuote = /[']/;
     var closeQuote = /[']/;
-    console.log(String.fromCharCode(8217));
     var quote = false;
 
     var dataPos = 0;
@@ -151,7 +210,7 @@ app.get('/:room_id', (req, res) => {
         }
         nextLine = nextLine + data[i];
       } else {
-        if(quote && data[i].match(closeQuote) && data[i+1].match(space)) {
+        if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
           lineStart = true;
         }
         if(!quote && data[i].match(punctuationEnd)) {
@@ -167,9 +226,12 @@ app.get('/:room_id', (req, res) => {
         }
       }
     }
-    console.log("PROCESSD THE STORY");
-    return res.render('room', {title: storyTitle, text: storyText});
+
+    context.title = storyTitle;
+    context.text = storyText;
+    return res.render('room', context);
   });
+});
 
   
 app.get('/readerRoom/:room_id', (req, res) => {
@@ -184,6 +246,7 @@ app.get('/readerRoom/:room_id', (req, res) => {
         console.log(context);
         res.render('readerRoom', context);
       }
+    }
 });
 
 app.get('/listenerRoom/:room_id', (req, res) => {
