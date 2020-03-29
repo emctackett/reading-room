@@ -1,13 +1,31 @@
-<div class="jumbotron text-center">
+<div class="jumbotron text-center near-moon-gradient">
   <h1 class="display-3">Welcome!</h1>
-  <p class="lead"><strong>You may enter the room now, or check your email for the link to this page, and return later.</p>
+  <p class="lead"><strong>You may enter the room now, or check your email for the reading room links to attend later.</p>
   <hr>
 </div>
-Email Provided: {{room.email}}
-You have chosen to read {{room.title}}.
-<br />
-If you are the listener:
-<a href="/listenerRoom/{{room.UIUD}}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Enter Here</a>
-<br />
-<h3>Reader Link:</h3>
-<p>/readerRoom/{{room.UIUD}}</p>
+  <div class="container">
+    {{#if room.email}}
+    <h3>Email Provided: {{room.email}}</h3>
+    {{/if}}
+    <p>
+    <h3>You have chosen to read {{room.title}}. </h3>
+    </p>
+    <br />
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+          <h3>If you are the listener:</h3>
+          <a href="/listenerRoom/{{room.UIUD}}" class="btn btn-primary btn-lg btn-block  deep-purple darken-1" role="button" aria-pressed="true">Enter Here</a>
+        </div>
+        <div class="col-sm">
+          <h3>Reader Link:</h3>
+          <button class="btn btn-primary btn-lg btn-block  deep-purple darken-1" role="button" aria-pressed="true" id="copyLink" >Copy Reader Link</button>
+
+          <input class="form-control form-control-lg" id="readerLink" type="text" value="https://reading-room.herokuapp.com/readerRoom/{{room.UIUD}}">
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>

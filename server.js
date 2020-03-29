@@ -154,6 +154,7 @@ app.post('/schedule', function(req, res){
           res.end();
       }else{
         console.log(context)
+        context.jsscripts = ["goto.js"];
         getRoomDetails(res, mysql, context, req.body.UIUDid, complete);
         function complete(){
           callbackCount++;
