@@ -44,6 +44,18 @@ $(function() {
       conn = connection
       peer_id = connection.peer
 
+      conn.on('data', function(data) {
+        if(data.action != undefined) {
+          if(data.action) {
+            document.getElementById('nextButton').click();
+            console.log("got action:true fron connection, clicked next");
+          } else {
+            document.getElementById('prevButton').click();
+            console.log("got action:false fron connection, clicked prev");
+          }
+        }
+      });
+
       //document.getElementById('connId').value = peer_id;
     });
 

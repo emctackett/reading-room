@@ -134,4 +134,18 @@ $(function() {
 
   initializePeerId();
   streamVideo();
+
+  document.getElementById('nextButton').addEventListener('click', function() {
+    if (conn.open) {
+      conn.send({action: true});
+      console.log("sent {action: true} to connection")
+    }
+  });
+
+  document.getElementById('prevButton').addEventListener('click', function() {
+    if (conn.open) {
+      conn.send({action: false});
+      console.log("sent {action: false} to connection")
+    }
+  })
 });
