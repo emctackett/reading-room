@@ -111,6 +111,9 @@ function getText(title, context, complete) {
           }
           nextLine = "";
         }
+        if(nextLine.includes("THE END.")){
+          i = Buffer.byteLength(data) + 1000;
+        }
       }
     }
 
