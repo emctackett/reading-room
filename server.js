@@ -109,6 +109,7 @@ app.get('/:room_id', (req, res) => {
     var space = / /;
     var openQuote = ['/', String.fromCharCode(2018), '/'].join('');
     var closeQuote = ['/',String.fromCharCode(2019),'/'].join('');
+    var endingStar = ['/',String.fromCharCode(42),'/'].join('');
     var quote = false;
 
     var dataPos = 0;
@@ -122,15 +123,22 @@ app.get('/:room_id', (req, res) => {
     console.log(Buffer.byteLength(data));
     for(var i=dataPos; i<Buffer.byteLength(data); i++) {
       if(lineStart) {
-        if(!data[i].match(space)) {
-          if(!data[i].match(openQuote)) {
-            quote = false;
-          } else{
-            quote = true;
+        if(!data[i].match(endingStar)) {
+          if(!data[i].match(space)) {
+            if(!data[i].match(openQuote)) {
+              quote = false;
+            } else{
+              quote = true;
+            }
+            lineStart = false;
           }
-          lineStart = false;
+          nextLine = nextLine + data[i];
+        } else {
+          console.log("found the star");
+          if(data[i+1].match(endingStar) && data[i+2].match(endingStar)) {
+            i = Buffer.byteLength(data) + 1000;
+          }
         }
-        nextLine = nextLine + data[i];
       } else {
         if(quote && data[i].match(closeQuote)) {
           lineStart = true;
@@ -143,6 +151,9 @@ app.get('/:room_id', (req, res) => {
           storyText.push(nextLine);
           console.log(nextLine);
           console.log(i);
+          if(nextLine.includes("THE END.")) {
+            i = Buffer.byteLength(data) + 1000;
+          }
           nextLine = "";
         }
       }
