@@ -46,8 +46,6 @@ $(function() {
 
     peer.on('close', function() {
         conn = null;
-        alert("Connection destroyed. Please refresh");
-        console.log('Connection destroyed');
     });
 
 
@@ -104,60 +102,36 @@ $(function() {
   }
 
   function disconnectCall() {
-
+    const link = document.createElement('a');
+    link.href="/";
+    peer.destroy();
+    link.click();
   }
 
   function renderDisconnectButton(btn) {
     $(btn).html('End Call');
+    $(btn).attr('data-connected', 'true');
     $(btn).removeClass('btn-success');
     $(btn).addClass('btn-danger');
-  }
-
-  function renderConnectButton(btn) {
-    $(btn).html('Video chat with Listener');
-    $(btn).removeClass('btn-danger');
-    $(btn).addClass('btn-success');
   }
 
   $('#call_button').on('click', function(e){
     const button = e.target;
     const status = $(button).attr('data-connected');
-    console.log(status);
+
     if (status === 'false') {
-      console.log('connecting');
       connectCall();
       renderDisconnectButton(button);
     } else {
       disconnectCall();
-      renderConnectButton(button);
     }
   });
-
 
   function getHostId() {
     let searchParams = new URLSearchParams(window.location.search);
     hostId = searchParams.get('id');
   }
-/*
-  function callHost() {
-    console.log(`calling host: ${hostId}`);
-
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true},
-      MediaStream => {
-        const call = peer.call(hostId, MediaStream);
-        call.on('stream', (remoteStream) => {
-
-          const remoteVideo = $('#remote-video')[0];
-          remoteVideo.srcObject = remoteStream;
-        });
-      });
-  }*/
 
   initializePeerId();
   streamVideo();
-
-//  getHostId();
-//  if (hostId) { callHost() }
-
-
 });

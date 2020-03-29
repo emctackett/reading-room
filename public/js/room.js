@@ -44,12 +44,11 @@ $(function() {
       conn = connection
       peer_id = connection.peer
 
-      document.getElementById('connId').value = peer_id;
+      //document.getElementById('connId').value = peer_id;
     });
 
     peer.on('close', function() {
         conn = null;
-        alert("Connection destroyed. Please refresh");
         console.log('Connection destroyed');
     });
 
@@ -80,32 +79,56 @@ $(function() {
         remoteVideo.srcObject = remoteStream;
       });
     });
+}
 
+  function connectCall() {
+    peer_id = document.getElementById("listenerId").innerHTML;
 
+    if(peer_id){
+      conn = peer.connect(peer_id)
+    }else{
+      alert("enter an id");
+      return false;
+    }
 
+    console.log("calling a peer:"+ peer_id);
+    console.log(peer);
 
-  document.getElementById('call_button').addEventListener('click', function(){
-  peer_id = document.getElementById("readerId").innerHTML;
-
-  if(peer_id){
-    conn = peer.connect(peer_id)
-  }else{
-    alert("enter an id");
-    return false;
+    var call = peer.call(peer_id, window.localStream);
+      call.on('stream', (remoteStream) => {
+        const remoteVideo = $('#remote-video')[0];
+        if (remoteVideo){
+          remoteVideo.srcObject = remoteStream;
+        }
+    });
   }
 
-  console.log("calling a peer:"+ peer_id)
-  console.log(peer);
 
-  var call = peer.call(peer_id, window.localStream);
-  call.on('stream', (remoteStream) => {
-    const remoteVideo = $('#remote-video')[0];
-    if (remoteVideo){
-      remoteVideo.srcObject = remoteStream;
+  function disconnectCall() {
+    const link = document.createElement('a');
+    link.href="/";
+    peer.destroy();
+    link.click();
+  }
+
+  function renderDisconnectButton(btn) {
+    $(btn).html('End Call');
+    $(btn).attr('data-connected', 'true');
+    $(btn).removeClass('btn-success');
+    $(btn).addClass('btn-danger');
+  }
+
+  $('#call_button').on('click', function(e){
+    const button = e.target;
+    const status = $(button).attr('data-connected');
+
+    if (status === 'false') {
+      connectCall();
+      renderDisconnectButton(button);
+    } else {
+      disconnectCall();
     }
   });
-  });
-  }
 
 
   function getHostId() {
@@ -129,7 +152,4 @@ $(function() {
 
   initializePeerId();
   streamVideo();
-
-  //  getHostId();
-  //  if (hostId) { callHost() }
-  });
+});
