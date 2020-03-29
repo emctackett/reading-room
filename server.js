@@ -199,7 +199,7 @@ app.get('/readerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
+//        console.log(context);
         res.render('readerRoom', context);
       }
     }
@@ -214,7 +214,7 @@ app.get('/listenerRoom/:room_id', (req, res) => {
     function complete(){
       callbackCount++;
       if(callbackCount >= 1){
-        console.log(context);
+//        console.log(context);
         res.render('room', context);
       }
     }
