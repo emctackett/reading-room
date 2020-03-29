@@ -33,7 +33,6 @@ $(function() {
 
     peer.on('open', function(id) {
       peerId = id;
-      console.log('my peer ID is: ' + id);
     });
 
     peer.on('connection', function(connection){
@@ -52,7 +51,6 @@ $(function() {
     });
 
     peer.on('call', call => {
-      console.log('answering');
       call.answer(window.localStream); // answer call with a/v stream
 
       call.on('stream', (remoteStream) => {
@@ -72,9 +70,6 @@ $(function() {
       alert("enter an id");
       return false;
     }
-
-    console.log("calling a peer:"+ peer_id)
-    console.log(peer);
 
     var call = peer.call(peer_id, window.localStream);
 
