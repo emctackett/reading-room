@@ -54,7 +54,11 @@ function getRoom(res, mysql, context, id, complete){
     }
     context.room = results[0];
     console.log(context);
-    getText(context.room.title, context, complete);
+    if (context.room == undefined) {
+      complete();
+    } else {
+      getText(context.room.title, context, complete);
+    }
   });
 }
 
