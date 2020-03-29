@@ -44,7 +44,19 @@ $(function() {
       conn = connection
       peer_id = connection.peer
 
-      document.getElementById('connId').value = peer_id;
+      conn.on('data', function(data) {
+        console.log("got data from connection");
+        if(data.action != undefined) {
+          console.log("data included action");
+          if (data.action) {
+            document.getElementById('nextButton').click();
+            console.log("clicked the next button");
+          } else {
+            document.getElementById('prevButton').click();
+            console.log("clicked the prev button");
+          }
+        }
+      });
     });
 
     peer.on('close', function() {
@@ -53,11 +65,12 @@ $(function() {
         console.log('Connection destroyed');
     });
 
-
     peer.on('error', function(err){
       alert("an error has occured:" + err);
       console.log(err);
     });
+
+
 
   /*  document.getElementById('conn_button').addEventListener('click', function(){
         peer_id = document.getElementById("connId").value;

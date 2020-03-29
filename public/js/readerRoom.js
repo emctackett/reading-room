@@ -42,8 +42,6 @@ $(function() {
     peer.on('connection', function(connection){
       conn = connection
       peer_id = connection.peer
-
-      document.getElementById('connId').value = peer_id;
     });
 
     peer.on('close', function() {
@@ -104,6 +102,20 @@ document.getElementById('call_button').addEventListener('click', function(){
     }
   });
 });
+
+  document.getElementById('nextButton').addEventListener('click', function() {
+    if (conn.open) {
+      conn.send({action: true});
+      console.log("sent {action: true} to connection")
+    }
+  });
+
+  document.getElementById('prevButton').addEventListener('click', function() {
+    if (conn.open) {
+      conn.send({action: false});
+      console.log("sent {action: false} to connection")
+    }
+  })
 }
 
 

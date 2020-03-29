@@ -38,6 +38,12 @@ function getText(title, context, complete) {
   var storyFile = "public/txt/" + title.toUpperCase().replace(/ /g,'_') + ".txt"
   console.log(storyFile);
   fs.readFile(storyFile, 'utf8', function(err, data) {
+
+    if(err) {
+      context.storyTitle = "Story loading failed. Please try setting up another room.";
+      complete();
+      return;
+    }
     var storyText = [];
     var storyTitle = "";
     var nextLine = "";
@@ -89,8 +95,9 @@ function getText(title, context, complete) {
 
       context.title = storyTitle;
       context.text = storyText;
+      console.log("added the story to context, storyTitle is: ", storyTitle);
     }
-    complete()
+    complete();
   });
 }
 
