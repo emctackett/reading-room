@@ -6,7 +6,6 @@
   <div class="container">
     {{#if room.email}}
     <h3>Email Provided: {{room.email}}</h3>
-    <br />
     {{/if}}
     <p>
     <h3>You have chosen to read {{room.title}}. </h3>
@@ -16,14 +15,17 @@
       <div class="row">
         <div class="col-sm">
           <h3>If you are the listener:</h3>
-          <a href="/listenerRoom/{{room.UIUD}}" class="btn btn-primary btn-lg btn-block" role="button" aria-pressed="true">Enter Here</a>
+          <a href="/listenerRoom/{{room.UIUD}}" class="btn btn-primary btn-lg btn-block  deep-purple darken-1" role="button" aria-pressed="true">Enter Here</a>
         </div>
         <div class="col-sm">
           <h3>Reader Link:</h3>
-          <p>/readerRoom/{{room.UIUD}}</p>
+          <button class="btn btn-primary btn-lg btn-block  deep-purple darken-1" role="button" aria-pressed="true" id="copyLink" >Copy Reader Link</button>
+
+          <input class="form-control form-control-lg" id="readerLink" type="text" value="https://reading-room.herokuapp.com/readerRoom/{{room.UIUD}}">
+
         </div>
 
       </div>
     </div>
-    
+
   </div>

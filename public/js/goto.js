@@ -1,16 +1,10 @@
 $(function() {
-  /* Get the text field */
-  var copyText = document.getElementById("myInput");
 
-  /* Select the text field */
-  copyText.select();
-  copyText.setSelectionRange(0, 99999); /*For mobile devices*/
-
-  /* Copy the text inside the text field */
-  document.execCommand("copy");
-
-  /* Alert the copied text */
-  alert("Copied the text: " + copyText.value);
-}
+  $('#copyLink').on('click', function(e){
+    var copyText = document.querySelector("#readerLink");
+    copyText.select();
+    document.execCommand("copy");
+    alert("Link Copied to Clipboard!");
+  });
 
 });
