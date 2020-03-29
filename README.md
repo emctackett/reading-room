@@ -12,6 +12,7 @@ The Reading Room is a fun way to connect book lovers of all ages, even in times 
 - [PeerJs](https://peerjs.com/)
 - [jQuery](https://jquery.com/)
 - [Project Gutenberg](https://www.gutenberg.org/files/2591/2591-h/2591-h.htm)
+- [Nodemailer](https://nodemailer.com/about/)
 
 ## ♀️ Authors 
 - [Mae LaPresta](https://github.com/mlapresta)
