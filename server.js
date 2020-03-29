@@ -117,6 +117,61 @@ app.get('/reset',function(req,res,next){
   });
 });
 
+app.get('/:room_id', (req, res) => {
+  var storyFile = "public/txt/RAPUNZEL.txt"
+  fs.readFile(storyFile, 'utf8', function(err, data) {
+    var storyText = [];
+    var storyTitle = "";
+    var nextLine = "";
+    var lineStart = true;
+    var punctuationEnd = /[:,.?!]/;
+    var space = / /;
+    var openQuote = /[']/;
+    var closeQuote = /[']/;
+    console.log(String.fromCharCode(8217));
+    var quote = false;
+
+    var dataPos = 0;
+
+    while(!data[dataPos].match(/\r/)) {
+      storyTitle = storyTitle + data[dataPos];
+      dataPos++;
+    }
+    data = data.replace(/\r\n/g,' ');
+
+    for(var i=dataPos; i<Buffer.byteLength(data); i++) {
+      if(lineStart) {
+        if(!data[i].match(space)) {
+          if(!data[i].match(openQuote)) {
+            quote = false;
+          } else{
+            quote = true;
+          }
+          lineStart = false;
+        }
+        nextLine = nextLine + data[i];
+      } else {
+        if(quote && data[i].match(closeQuote) && data[i+1].match(space)) {
+          lineStart = true;
+        }
+        if(!quote && data[i].match(punctuationEnd)) {
+          lineStart = true;
+        }
+        nextLine = nextLine + data[i];
+        if(lineStart) {
+          storyText.push(nextLine);
+          if(nextLine.includes("THE END.")) {
+            i = Buffer.byteLength(data) + 1000;
+          }
+          nextLine = "";
+        }
+      }
+    }
+    console.log("PROCESSD THE STORY");
+    return res.render('room', {title: storyTitle, text: storyText});
+  });
+
+  
 app.get('/readerRoom/:room_id', (req, res) => {
   var callbackCount = 0;
   var context = {};
@@ -129,7 +184,6 @@ app.get('/readerRoom/:room_id', (req, res) => {
         console.log(context);
         res.render('readerRoom', context);
       }
-    }
 });
 
 app.get('/listenerRoom/:room_id', (req, res) => {
