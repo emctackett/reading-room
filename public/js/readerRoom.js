@@ -26,7 +26,7 @@ $(function() {
   function initializePeerId() {
     // sign up for key @ https://peerjs.com/peerserver.html
 
-    const id = document.getElementById('listenerId').innerHTML
+    const id = document.getElementById('readerId').innerHTML
     var conn;
     var peer_id;
     peer = new Peer(id);
@@ -83,8 +83,8 @@ $(function() {
 
 
 
-  document.getElementById('call_button').addEventListener('click', function(){
-  peer_id = document.getElementById("readerId").innerHTML;
+document.getElementById('call_button').addEventListener('click', function(){
+  peer_id = document.getElementById("listenerId").innerHTML;
 
   if(peer_id){
     conn = peer.connect(peer_id)
@@ -103,15 +103,15 @@ $(function() {
       remoteVideo.srcObject = remoteStream;
     }
   });
-  });
-  }
+});
+}
 
 
   function getHostId() {
     let searchParams = new URLSearchParams(window.location.search);
     hostId = searchParams.get('id');
   }
-  /*
+/*
   function callHost() {
     console.log(`calling host: ${hostId}`);
 
@@ -129,8 +129,8 @@ $(function() {
   initializePeerId();
   streamVideo();
 
-  //  getHostId();
-  //  if (hostId) { callHost() }
+//  getHostId();
+//  if (hostId) { callHost() }
 
 
-  });
+});

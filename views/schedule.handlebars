@@ -2,16 +2,24 @@
   <h1>The Reading Room</h1>
   <div>
     <h2>Schedule New Session</h2>
-    <button id="new-room">Clicky</button>
   </div>
-  <form>
+  <form id="addRoom" action="/schedule" method="post">
     <div class="form-group">
-      <label for="exampleFormControlInput1">Email address</label>
-      <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      <label for="emailAddr">Email address</label>
+      <input type="email" class="form-control" id="emailAddr" name="emailAddr" placeholder="name@example.com">
+      <input type="hidden" id="UIUDid" name="UIUDid" value="">
+      <input type="hidden" id="readId" name="readId" value="">
+      <input type="hidden" id="listenId" name="listenId" value="">
     </div>
     <div class="form-group">
+      <label for="meetingTime">Choose a time for your reading session:</label>
+      <input type="datetime-local" id="meetingTime"
+         name="meetingTime" value=""
+         min="2019-03-27T00:00" max="2024-06-14T00:00">
+      </div>
+    <div class="form-group">
       <label for="storyTitle">Story</label>
-      <select class="form-control" id="storyTitle">
+      <select class="form-control" id="storyTitle" name="storyTitle">
         <option value="THE GOLDEN BIRD">The Golden Bird</option>
         <option value="HANS IN LUCK">Hans In Luck</option>
         <option value="JORINDA AND JORINDEL">Jorinda And Jorindel</option>
@@ -78,15 +86,7 @@
         <option value="SNOW-WHITE AND ROSE-RED">Snow-White And Rose-Red</option>
       </select>
     </div>
-    <div class="form-group">
-      <label for="meeting-time">Choose a time for your reading session:</label>
 
-      <input type="datetime-local" id="meeting-time"
-         name="meeting-time" value="2020-03-29T19:30"
-         min="2020-03-27T00:00" max="2024-06-14T00:00">
-
-      <label for="exampleFormControlTextarea1">Example textarea</label>
-      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-    </div>
+      <input type="submit" value="Submit">
   </form>
 </main>
