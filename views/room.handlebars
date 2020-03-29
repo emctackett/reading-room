@@ -1,10 +1,12 @@
-<main class="mt-0 young-passion-gradient">
+<main class="young-passion-gradient" style="margin-top: -0.5em">
 
 <div class="container">
   <div class="row mt-3">
     <h1 id="welcome">Welcome to your reading room! You are reading {{title}}.</h1>
+  </div>
+  <div clas="row">
     <span id = "displayId"></span>
-    <button type="button" id='call_button' class="btn btn-success btn-md" data-connected="false">
+    <button type="button" id='call_button' class="btn btn-success btn-lg" data-connected="false">
     Video Chat with Reader
     </button>
   </div>
@@ -33,13 +35,25 @@
   <div class="carousel-inner">
     <div class="carousel-item active">
       <div class="jumbotron jumbotron-fluid mb-0">
-        <h1 class="display-4 text-center ml-5 mr-5">{{title}}</h1>
+        <div class="row>">
+          <div class="col-2"></div>
+          <div class="col-10">
+            <h1 class="display-4 text-center ml-5 mr-5">{{title}}</h1>
+          </div>
+          <div class="col-2"></div>
+        </div>
       </div>
     </div>
     {{#each text}}
     <div class="carousel-item">
       <div class="jumbotron jumbotron-fluid mb-0">
-        <h3 class="display-4 text-center ml-5 mr-5">{{this}}</h3>
+        <div class="row>">
+          <div class="col-2"></div>
+          <div class="col-10">
+            <h3 class="display-4 text-center ml-5 mr-5">{{this}}</h3>
+          </div>
+          <div class="col-2"></div>
+        </div>
       </div>
     </div>
     {{/each}}
