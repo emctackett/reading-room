@@ -105,6 +105,17 @@ $(function() {
     if (status === 'false') {
       connectCall();
       renderDisconnectButton(button);
+      document.body.onkeyup = function(e){
+        if(e.keyCode == 32){
+          event.preventDefault();
+          $("#nextButton").click();
+          if (conn.open) {
+            conn.send({action: true});
+            console.log("sent {action: true} to connection")
+          }
+        }
+      };
+
     } else {
       disconnectCall();
     }
