@@ -5,7 +5,7 @@ $(function() {
 
   let hostId;
   let peer;
-//  let localStream;
+
   function streamVideo() {
     navigator.getUserMedia = navigator.GetUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
     navigator.getUserMedia(
@@ -24,8 +24,6 @@ $(function() {
   }
 
   function initializePeerId() {
-    // sign up for key @ https://peerjs.com/peerserver.html
-
     const id = document.getElementById('readerId').innerHTML
     var conn;
     var peer_id;
@@ -73,38 +71,67 @@ $(function() {
     peer.on('call', call => {
       console.log('answering');
       call.answer(window.localStream); // answer call with a/v stream
+
       call.on('stream', (remoteStream) => {
         const remoteVideo = $('#remote-video');
         remoteVideo.attr('src', remoteStream);
         remoteVideo.srcObject = remoteStream;
       });
     });
-
-
-
-
-document.getElementById('call_button').addEventListener('click', function(){
-  peer_id = document.getElementById("listenerId").innerHTML;
-
-  if(peer_id){
-    conn = peer.connect(peer_id)
-  }else{
-    alert("enter an id");
-    return false;
   }
 
-  console.log("calling a peer:"+ peer_id)
-  console.log(peer);
+  function connectCall() {
+    peer_id = document.getElementById("listenerId").innerHTML;
 
-  var call = peer.call(peer_id, window.localStream);
-  call.on('stream', (remoteStream) => {
-    const remoteVideo = $('#remote-video')[0];
-    if (remoteVideo){
-      remoteVideo.srcObject = remoteStream;
+    if(peer_id){
+      conn = peer.connect(peer_id)
+    } else {
+      alert("enter an id");
+      return false;
+    }
+
+    console.log("calling a peer:"+ peer_id)
+    console.log(peer);
+
+    var call = peer.call(peer_id, window.localStream);
+
+    call.on('stream', (remoteStream) => {
+      const remoteVideo = $('#remote-video')[0];
+      if (remoteVideo){
+        remoteVideo.srcObject = remoteStream;
+      }
+    });
+  }
+
+  function disconnectCall() {
+
+  }
+
+  function renderDisconnectButton(btn) {
+    $(btn).html('End Call');
+    $(btn).removeClass('btn-success');
+    $(btn).addClass('btn-danger');
+  }
+
+  function renderConnectButton(btn) {
+    $(btn).html('Video chat with Listener');
+    $(btn).removeClass('btn-danger');
+    $(btn).addClass('btn-success');
+  }
+
+  $('#call_button').on('click', function(e){
+    const button = e.target;
+    const status = $(button).attr('data-connected');
+    console.log(status);
+    if (status === 'false') {
+      console.log('connecting');
+      connectCall();
+      renderDisconnectButton(button);
+    } else {
+      disconnectCall();
+      renderConnectButton(button);
     }
   });
-});
-}
 
 
   function getHostId() {
