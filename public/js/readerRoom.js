@@ -34,14 +34,14 @@ $(function() {
     peer.on('open', function(id) {
       peerId = id;
       console.log('my peer ID is: ' + id);
-      $(`<p>Your peer id is ${peerId}</p>`).insertAfter(heading);
+      //$(`<p>Your peer id is ${peerId}</p>`).insertAfter(heading);
     });
 
     peer.on('connection', function(connection){
       conn = connection
       peer_id = connection.peer
 
-      document.getElementById('connId').value = peer_id;
+      //document.getElementById('connId').value = peer_id;
     });
 
     peer.on('close', function() {
@@ -98,6 +98,9 @@ $(function() {
       if (remoteVideo){
         remoteVideo.srcObject = remoteStream;
       }
+      document.getElementById("nextButton").removeAttribute("hidden");
+      document.getElementById("prevButton").removeAttribute("hidden");
+
     });
   }
 

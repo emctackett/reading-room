@@ -94,7 +94,7 @@ $(function() {
 }
 
   function connectCall() {
-    peer_id = document.getElementById("listenerId").innerHTML;
+    peer_id = document.getElementById("readerId").innerHTML;
 
     if(peer_id){
       conn = peer.connect(peer_id)
