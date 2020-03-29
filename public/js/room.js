@@ -31,7 +31,7 @@ $(function() {
     var conn;
     var peer_id;
     peer = new Peer(id, {key: 'lwjd5qra8257b9'});
-    const heading = $('h2');
+    const heading = $('#welcome');
     let peerId;
 
     peer.on('open', function(id) {
