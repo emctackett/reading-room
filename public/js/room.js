@@ -67,7 +67,6 @@ $(function() {
     });
 
     peer.on('call', call => {
-      console.log('answering');
       call.answer(window.localStream); // answer call with a/v stream
       call.on('stream', (remoteStream) => {
         const remoteVideo = $('#remote-video');
