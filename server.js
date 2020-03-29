@@ -255,7 +255,7 @@ app.get('/:room_id', (req, res) => {
   });
 });
 
-  
+
 app.get('/readerRoom/:room_id', (req, res) => {
   var callbackCount = 0;
   var context = {};
