@@ -69,7 +69,7 @@ function getText(title, context, complete) {
     var storyTitle = "";
     var nextLine = "";
     var lineStart = true;
-    var punctuationEnd = /[:,.?!]/;
+    var punctuationEnd = /[;:,.?!]/;
     var space = / /;
     var letter = /[A-Za-z]/;
     var openQuote = /[']/;
@@ -97,7 +97,11 @@ function getText(title, context, complete) {
         nextLine = nextLine + data[i];
       } else {
         if(quote && data[i].match(closeQuote) && !data[i+1].match(letter)) {
-          lineStart = true;
+          if(!data[i+1].match(space)) {
+            quote = false;
+          } else {
+            lineStart = true;
+          }
         }
         if(!quote && data[i].match(punctuationEnd)) {
           lineStart = true;
@@ -105,6 +109,7 @@ function getText(title, context, complete) {
         nextLine = nextLine + data[i];
         if(lineStart) {
           storyText.push(nextLine);
+          console.log(nextLine);
           if(nextLine.includes("THE END.")) {
             i = Buffer.byteLength(data) + 1000;
           }
