@@ -72,6 +72,7 @@ $(function() {
         const remoteVideo = $('#remote-video');
         remoteVideo.attr('src', remoteStream);
         remoteVideo.srcObject = remoteStream;
+        document.getElementById("placeholderTxt").hidden = true;
       });
     });
 }
